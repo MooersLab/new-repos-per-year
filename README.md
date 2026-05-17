@@ -2,6 +2,17 @@
 
 Count public GitHub repositories created per year for a user or organization, and print the result as an Org-mode table ready to drop into a LaTeX document.
 
+## Problem addressed
+
+Lines of code and the number of new repos created are controversial proxies for developer productivity. 
+The question that motivated this project was whether AI has improved my productivity.
+The answer is that it has been a wash. 
+I have not experienced a sustained increase in the number of repos created since I started vibe coding in August 2024.
+You can check that claim for yourself by running this script on MooersLab.
+I think, in part, this result is due to AI's own mental-bandwidth-absorbing overhead costs that people fail to take into account.
+
+## Solution
+
 The script walks the GitHub REST API, follows `Link` headers across every page of results, groups repositories by creation year, and renders an Org-mode table with `booktabs`-style attributes that exports cleanly through `org-latex-export-to-pdf`.
 
 ## Features
@@ -11,7 +22,7 @@ The script walks the GitHub REST API, follows `Link` headers across every page o
 - Optional GitHub token support, picked up from a `--token` flag or the `GITHUB_TOKEN` environment variable. Authenticated calls get the higher GitHub API rate limit.
 - Pure standard library. No third-party runtime dependencies. The only extra packages are testing tools.
 - Org-mode output. The table includes a `#+NAME`, `#+CAPTION`, and `#+ATTR_LATEX: :booktabs t` line for clean LaTeX export.
-- Clean exit codes. Returns 0 on success and 1 on failure so the script composes well with shell pipelines.
+- Clean exit codes. Returns 0 on success and 1 on failure, so the script composes well with shell pipelines.
 
 ## Requirements
 

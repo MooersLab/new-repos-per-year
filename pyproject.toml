@@ -1,0 +1,88 @@
+[build-system]
+requires = ["setuptools>=61.0"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "newrepos"
+version = "0.2.0"
+description = "Count public GitHub repositories created per year for a user or organization."
+readme = "README.md"
+license = { text = "MIT" }
+requires-python = ">=3.8"
+authors = [
+    { name = "Blaine Mooers", email = "blaine-mooers@ou.edu" },
+]
+keywords = ["github", "api", "repositories", "org-mode", "statistics"]
+classifiers = [
+    "Development Status :: 4 - Beta",
+    "Environment :: Console",
+    "Intended Audience :: Developers",
+    "Intended Audience :: Science/Research",
+    "License :: OSI Approved :: MIT License",
+    "Operating System :: OS Independent",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3 :: Only",
+    "Topic :: Software Development :: Version Control :: Git",
+    "Topic :: Utilities",
+]
+
+[project.optional-dependencies]
+test = [
+    "pytest>=7.0",
+    "pytest-cov>=4.0",
+    "coverage>=7.0",
+    "ruff>=0.4",
+]
+
+[project.scripts]
+newrepos = "newRepos:main"
+
+[project.urls]
+Homepage = "https://github.com/MooersLab/newRepos"
+Source = "https://github.com/MooersLab/newRepos"
+Issues = "https://github.com/MooersLab/newRepos/issues"
+
+[tool.pytest.ini_options]
+minversion = "7.0"
+addopts = [
+    "-ra",
+    "--strict-markers",
+    "--strict-config",
+]
+testpaths = ["tests"]
+markers = [
+    "integration: end-to-end tests that exercise the full pipeline (deselect with -m 'not integration')",
+]
+
+[tool.coverage.run]
+source = ["newRepos"]
+branch = true
+omit = [
+    "tests/*",
+]
+
+[tool.coverage.report]
+show_missing = true
+skip_covered = false
+fail_under = 90
+exclude_lines = [
+    "pragma: no cover",
+    "if __name__ == .__main__.:",
+    "raise NotImplementedError",
+]
+
+[tool.coverage.html]
+directory = "htmlcov"
+
+[tool.ruff]
+line-length = 100
+target-version = "py38"
+
+[tool.ruff.lint]
+select = ["E", "F", "W", "B", "UP", "SIM", "PL"]
+ignore = []
+
+[tool.ruff.lint.per-file-ignores]
+# Tests legitimately compare against magic numbers, take many fixtures, and
+# may import inside fixtures.
+"tests/*" = ["PLR2004", "PLR0913", "PLC0415"]
